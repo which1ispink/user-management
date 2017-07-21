@@ -1,4 +1,4 @@
 user-management
 ===============
 
-### An API for a simple user management system
+### A REST API for a simple user management system
