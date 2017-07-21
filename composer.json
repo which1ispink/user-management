@@ -1,7 +1,14 @@
 {
     "name": "which1ispink/user-management",
-    "license": "proprietary",
+    "description": "A REST API for a simple user management system",
+    "license": "MIT",
     "type": "project",
+    "authors": [
+        {
+            "name": "Ahmed Hassan",
+            "email": "a.hassan.dev@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle"

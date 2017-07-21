@@ -106,4 +106,14 @@ class Group extends Entity
         $user->removeFromGroup($this);
         return $this;
     }
+
+    /**
+     * Returns whether or not group has users assigned to it as opposed to empty
+     *
+     * @return bool
+     */
+    public function hasAssignedUsers()
+    {
+        return count($this->users) > 0;
+    }
 }
