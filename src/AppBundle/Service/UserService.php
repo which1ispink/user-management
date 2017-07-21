@@ -1,8 +1,8 @@
 <?php
 namespace AppBundle\Service;
 
+use AppBundle\Exception\EntityNotFoundException;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Exception\InvalidOperationException;
 use AppBundle\Entity\User;
 
 /**
@@ -40,6 +40,8 @@ class UserService extends AbstractService implements UserServiceInterface
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        return $user;
     }
 
     /**
@@ -52,7 +54,7 @@ class UserService extends AbstractService implements UserServiceInterface
         $group = $this->groupService->find($groupId);
 
         if (! $user || ! $group) {
-            throw new InvalidOperationException(
+            throw new EntityNotFoundException(
                 'The user or group specified does not exist'
             );
         }
@@ -70,7 +72,7 @@ class UserService extends AbstractService implements UserServiceInterface
         $user = $this->find($userId);
         $group = $this->groupService->find($groupId);
         if (! $user || ! $group) {
-            throw new InvalidOperationException(
+            throw new EntityNotFoundException(
                 'The user or group specified does not exist'
             );
         }

@@ -4,12 +4,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Exception\InvalidInputDataException;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
  * @ORM\Table(name="groups", options={"collate"="utf8_unicode_ci"})
  */
-class Group extends Entity
+class Group extends Entity implements JsonSerializable
 {
     /**
      * @var int
@@ -66,9 +67,9 @@ class Group extends Entity
     public function setName($name)
     {
         $name = (string) $name;
-        if (strlen($name) > 60) {
+        if (empty($name) || strlen($name) > 60) {
             throw new InvalidInputDataException(
-                'Group name must be a string that is less than 60 characters in length'
+                'Group name must be a non-empty string that is less than 60 characters in length'
             );
         }
 
@@ -116,5 +117,16 @@ class Group extends Entity
     public function hasAssignedUsers()
     {
         return count($this->users) > 0;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
     }
 }

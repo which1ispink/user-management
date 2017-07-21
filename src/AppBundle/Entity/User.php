@@ -5,12 +5,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Exception\InvalidInputDataException;
 use AppBundle\Exception\InvalidOperationException;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users", options={"collate"="utf8_unicode_ci"})
  */
-class User extends Entity
+class User extends Entity implements JsonSerializable
 {
     /**
      * @var int
@@ -76,9 +77,9 @@ class User extends Entity
     public function setName($name)
     {
         $name = (string) $name;
-        if (strlen($name) > 60) {
+        if (empty($name) || strlen($name) > 60) {
             throw new InvalidInputDataException(
-                'User name must be a string that is less than 60 characters in length'
+                'User name must be a non-empty string that is less than 60 characters in length'
             );
         }
 
@@ -141,5 +142,17 @@ class User extends Entity
     {
         $this->groups = new ArrayCollection();
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'groups' => $this->getGroups()->toArray(),
+        ];
     }
 }

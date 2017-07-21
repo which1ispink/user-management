@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Service;
 
+use AppBundle\Exception\EntityNotFoundException;
 use AppBundle\ValueObject\Paging;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -51,6 +52,12 @@ abstract class AbstractService implements ApplicationServiceInterface
     public function delete($id)
     {
         $entity = $this->find($id);
+        if (! $entity) {
+            throw new EntityNotFoundException(
+                'Entity not found'
+            );
+        }
+
         $this->entityManager->remove($entity);
         $this->entityManager->flush();
     }

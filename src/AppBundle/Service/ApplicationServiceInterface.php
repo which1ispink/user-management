@@ -3,6 +3,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Entity;
 use AppBundle\ValueObject\Paging;
+use AppBundle\Exception\EntityNotFoundException;
 
 interface ApplicationServiceInterface
 {
@@ -28,6 +29,7 @@ interface ApplicationServiceInterface
      * Deletes an entity given its ID
      *
      * @param $id
+     * @throws EntityNotFoundException if the entity at the given ID can not be found
      */
     public function delete($id);
 }

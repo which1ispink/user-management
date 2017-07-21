@@ -1,7 +1,8 @@
 <?php
 namespace AppBundle\Service;
 
-use AppBundle\Exception\InvalidOperationException;
+use AppBundle\Entity\User;
+use AppBundle\Exception\EntityNotFoundException;
 
 /**
  * Interface UserServiceInterface
@@ -12,6 +13,7 @@ interface UserServiceInterface extends ApplicationServiceInterface
      * Creates a new user given the user name
      *
      * @param string $name
+     * @return User
      */
     public function create($name);
 
@@ -20,7 +22,7 @@ interface UserServiceInterface extends ApplicationServiceInterface
      *
      * @param int $userId
      * @param int $groupId
-     * @throws InvalidOperationException if the user or group identified by the IDs don't exist
+     * @throws EntityNotFoundException if the user or group identified by the IDs don't exist
      */
     public function assignToGroup($userId, $groupId);
 
@@ -29,7 +31,7 @@ interface UserServiceInterface extends ApplicationServiceInterface
      *
      * @param int $userId
      * @param int $groupId
-     * @throws InvalidOperationException if the user or group identified by the IDs don't exist
+     * @throws EntityNotFoundException if the user or group identified by the IDs don't exist
      */
     public function removeFromGroup($userId, $groupId);
 }

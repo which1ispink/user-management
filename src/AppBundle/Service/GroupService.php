@@ -2,6 +2,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Group;
+use AppBundle\Exception\EntityNotFoundException;
 use AppBundle\Exception\InvalidOperationException;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -32,6 +33,8 @@ class GroupService extends AbstractService implements GroupServiceInterface
 
         $this->entityManager->persist($group);
         $this->entityManager->flush();
+
+        return $group;
     }
 
     /**
@@ -42,6 +45,12 @@ class GroupService extends AbstractService implements GroupServiceInterface
     {
         /** @var Group $group */
         $group = $this->find($id);
+        if (! $group) {
+            throw new EntityNotFoundException(
+                'The specified group can not be found'
+            );
+        }
+
         if ($group->hasAssignedUsers()) {
             throw new InvalidOperationException(
                 'The specified group has assigned users and can not be deleted'
