@@ -2,6 +2,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Group;
+use AppBundle\Exception\InvalidOperationException;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -30,6 +31,24 @@ class GroupService extends AbstractService implements GroupServiceInterface
         $group->setName($name);
 
         $this->entityManager->persist($group);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @inheritdoc
+     * @throws InvalidOperationException if the group has assigned users
+     */
+    public function delete($id)
+    {
+        /** @var Group $group */
+        $group = $this->find($id);
+        if ($group->hasAssignedUsers()) {
+            throw new InvalidOperationException(
+                'The specified group has assigned users and can not be deleted'
+            );
+        }
+
+        $this->entityManager->remove($group);
         $this->entityManager->flush();
     }
 

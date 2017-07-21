@@ -61,6 +61,7 @@ class Group extends Entity
     /**
      * @param string $name
      * @return Group
+     * @throws InvalidInputDataException if the given name is more than 60 characters in length
      */
     public function setName($name)
     {

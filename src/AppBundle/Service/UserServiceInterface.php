@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Service;
 
+use AppBundle\Exception\InvalidOperationException;
+
 /**
  * Interface UserServiceInterface
  */
@@ -18,6 +20,7 @@ interface UserServiceInterface extends ApplicationServiceInterface
      *
      * @param int $userId
      * @param int $groupId
+     * @throws InvalidOperationException if the user or group identified by the IDs don't exist
      */
     public function assignToGroup($userId, $groupId);
 
@@ -26,6 +29,7 @@ interface UserServiceInterface extends ApplicationServiceInterface
      *
      * @param int $userId
      * @param int $groupId
+     * @throws InvalidOperationException if the user or group identified by the IDs don't exist
      */
     public function removeFromGroup($userId, $groupId);
 }

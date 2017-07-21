@@ -71,6 +71,7 @@ class User extends Entity
     /**
      * @param string $name
      * @return User
+     * @throws InvalidInputDataException if the given name is more than 60 characters in length
      */
     public function setName($name)
     {
@@ -98,6 +99,7 @@ class User extends Entity
      *
      * @param Group $group
      * @return User
+     * @throws InvalidOperationException if the user is already assigned to the given group
      */
     public function assignToGroup(Group $group)
     {
@@ -116,6 +118,7 @@ class User extends Entity
      *
      * @param Group $group
      * @return User
+     * @throws InvalidOperationException if the user is not assigned to the given group
      */
     public function removeFromGroup(Group $group)
     {

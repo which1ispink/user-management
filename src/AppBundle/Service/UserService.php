@@ -47,11 +47,13 @@ class UserService extends AbstractService implements UserServiceInterface
      */
     public function assignToGroup($userId, $groupId)
     {
+        /** @var User $user */
         $user = $this->find($userId);
         $group = $this->groupService->find($groupId);
+
         if (! $user || ! $group) {
             throw new InvalidOperationException(
-                'The user or group specified do not exist'
+                'The user or group specified does not exist'
             );
         }
 
@@ -64,11 +66,12 @@ class UserService extends AbstractService implements UserServiceInterface
      */
     public function removeFromGroup($userId, $groupId)
     {
+        /** @var User $user */
         $user = $this->find($userId);
         $group = $this->groupService->find($groupId);
         if (! $user || ! $group) {
             throw new InvalidOperationException(
-                'The user or group specified do not exist'
+                'The user or group specified does not exist'
             );
         }
 
